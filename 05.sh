@@ -1,36 +1,56 @@
 #!/bin/sh
-clear
-mkdir ~/backupSO2 2>/dev/null
+if [ $# -ne 1 ] ; then
+	echo Voce deveria ter entrado com o parametro.
+	echo Rode novamente informando a pasta para armazenar/restaurar o backup
+	exit 2
+fi
 
-echo Arquivos:
-ls | cut -d " " -f1 > .05temp.txt
-cat .05temp.txt
+echo ______________________________________________________________________
+echo ARQUIVOS ORIGINAIS EM $pwd:
+echo ______________________________________________________________________
+ls .
+echo
+echo
 
-NumArquivos=$(ls -l| wc -l)
-NumArquivos=$(($NumArquivos - 1));
-echo Total: $NumArquivos arquivos
-
-
-echo ----------------------------------------------------------------------
-echo CRIANDO BACKUP ~/backupSO2:
-echo ----------------------------------------------------------------------
-for x in `seq 1 $NumArquivos`
-do
-    arquivo=`cat .05temp.txt | head -n $x | tail -n 1`
-	ls  ~/backupSO2/"$arquivo" 2> /dev/null > /dev/null
-	if [ $? -eq 0 ] ; then
-		echo "Foi encontrado o backup do $arquivo (criarei uma nova versao)"
-		versao=$(ls ~/backupSO2 | grep -cw $arquivo)
-		cp $arquivo ~/backupSO2/"$arquivo".v"$versao"
-		
-	else
-		echo Criando copia do arquivo $arquivo
-		cp $arquivo  ~/backupSO2
-	fi
-done
 
 echo ----------------------------------------------------------------------
-echo CHECANDO/RESTAURANDO ARQUIVOS EM ~/backupSO2:
+echo CRIANDO BACKUP EM $1:
 echo ----------------------------------------------------------------------
-ls -l ~/backupSO2
-rm .05temp.txt
+backup()(
+	mkdir "$1" 2> /dev/null > /dev/null
+	for arquivo in $(ls .)
+	do  
+		if [ -d "$arquivo" ] ; then
+			ls  "$1"/"$arquivo" 2> /dev/null > /dev/null
+			if [ $? -eq 0 ] ; then
+				versao=$(ls "$1" | grep -cw $arquivo)
+				mkdir "$1"/"$arquivo".v"$versao"		
+				cp -r $arquivo/* "$1"/"$arquivo".v"$versao"/
+			else
+				mkdir "$1"/"$arquivo"
+				cp -r $arquivo/* "$1"/"$arquivo"/
+			fi
+		else
+			ls  "$1"/"$arquivo" 2> /dev/null > /dev/null
+			if [ $? -eq 0 ] ; then
+				echo "Foi encontrado o backup do $arquivo (criarei uma nova versao)"
+				versao=$(ls "$1" | grep -cw $arquivo)
+				cp $arquivo "$1"/"$arquivo".v"$versao"		
+			else
+				echo Criando copia do arquivo $arquivo
+				cp $arquivo  "$1"
+			fi
+		fi
+
+
+	done
+)
+
+backup $1
+
+echo
+echo ----------------------------------------------------------------------
+echo CHECANDO/RESTAURANDO ARQUIVOS EM $1:
+echo ----------------------------------------------------------------------
+ls $1
+rm .05temp.* 2> /dev/null

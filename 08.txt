@@ -1,0 +1,9 @@
+	O script abaixo percorrer todas as pastas da minha /home/$1/ afim de procurar por um arquivo chamado core. O arquivo é apagado.
+
+	cd /home/$1 ; /bin/ls ; echo -> Abre a pasta que estou passando como parâmetro, lista o que tem lá dentro, e depois pula uma linha no terminal.
+	for UU in $(/bin/ls) ; do
+	cd $UU -> abro cada pasta que está dentro da minha /home/$1
+	if [ -f core ] ; then -> se core existir e não for diretório.
+	rm core -> apago o core.
+	echo $UU -> imprimo a pasta que estou apagando o core.	
+	cd - -> volto pra pasta acima pra abrir outroas pastas.		

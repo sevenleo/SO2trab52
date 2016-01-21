@@ -1,0 +1,7 @@
+	ps -U $USER -o "%p %n %a" -> lista os processos do seu usuário 
+	egrep $1 -> primeiro match da expressão regular
+	egrep -v 'ps|egrep|re-nice' -> não exibe linhas com ps|egrep|re-nice
+	cut -d ' ' -f 1 -> pega a primeira coluna
+	renice +8 $P > /dev/null -> aumenta a prioridade do processo $P em +8 sem colocar nada na tela
+	$(ps -U $USER -o "%p %n %a" | egrep $1 | egrep -v 'ps|egrep|re-nice' | cut -d ' ' -f 1) -> seria a lista com os PID dos processos em execução pelo seu usuário
+	tudo -> aumenta a prioridade dos processos do seu usuário em +8.

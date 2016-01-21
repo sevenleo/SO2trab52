@@ -1,0 +1,11 @@
+	Este script pega o arquivo de log do servidor de email e faz uma cópia baseado no dia em que ele foi executado. O arquivo de log é apagado e criado um novo sempre executado.
+
+	set -x -> O comando mostra os comandos e os argumentos assim que eles estao sendo executados.
+	lbl=$(date +%y%b%d-%H%M%S | tr '[A-Z]' '[a-z]') -> Variavel lbl cria um rótulo baseado na data em que o script é executado. O comando tr faz com o que as maisculas e minusculas sejam a mesma coisa.
+	maildir=$HOME/Mail -> Variavel maildil pega o diretorio de Mail do usuário.
+	logfile=$maildir/log -> Concatena na variavel logfile pra especificar o caminho de logs. 
+	bakfile=$logfile$lbl -> Concatena mais uma vez, só que agora com o rótulo criado.
+	if [ -s $logfile ] ; then -> Verifica se o arquivo de existe e não está vazio.
+	mv -f $logfile $bakfile -> Copio o conteúdo de log para Mail apagando o primeiro
+	touch $logfile -> Crio o arquivo de log novamente.
+	gzip -f -9 $bakfile -> Faço a compressão do arquivo em Mail.

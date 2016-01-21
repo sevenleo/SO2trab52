@@ -9,9 +9,9 @@ echo "		Palavras	Linhas		Arquivo"
 echo __________________________________________________________
 
 echo metodo 1
-find * -maxdepth 0 -type f -exec wc -l -c {} \; |  sed 's/ \+/\t\t/g'
+find * -maxdepth 0  -type f -exec wc -w -l {} \; |  sed 's/ \+/\t\t/g'
 
 echo __________________________________________________________
 
 echo metodo 2
-wc -l -c * 2> /dev/null |  sed 's/ \+/\t\t/g' | head -n $NumArquivos  
+wc -w -l * 2> /dev/null |  sed 's/ \+/\t\t/g' | head -n $NumArquivos   

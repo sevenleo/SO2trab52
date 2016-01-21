@@ -5,10 +5,10 @@ function ff(){ local a="$1"; shift; find . -name $a -print "$@"; }
 #procura no diretorio corrente arquivos com a string passada como parametro em seguida printa todos os parametros (nomes)
 
 
+
 function ffd(){ local a="$1"; shift; find . -name $a -type d -print "$@"; } 
 #====================================================
 #muito parecida com a anterior porem busca apenas pastas com o mesmo nome do parametro passado em seguida imprime os parametros (nomes)
-
 
 
 
@@ -18,19 +18,15 @@ function cr() { chmod a+r "$@"; }
 
 
 
-
 function cw() { chmod u+w "$@"; } 
 #====================================================
 #adiciona ao usuario atual a permicao de escrita para os arquivos passados como paramtro
 
 
 
-
-
 function cx() { chmod a+x "$@"; } 
 #====================================================
 #adiciona a todos os usuarios a permicao de execucao para os arquivos passados como paramtro
-
 
 
 
@@ -41,8 +37,6 @@ function crr(){ if [ $# = "0" ] ; then DIR="." ; else DIR="$1" ; fi ;\ find $DIR
 
 
 
-
-
 function cxr() { if [ $# = "0" ] ; then DIR="." ; else DIR="$1" ; fi ;\ find $DIR -type d -exec chmod a+x {} \; ; } 
 #====================================================
 #verifica se a quantidade de parametros ´e igual a zero, se for a variavel DIR atribui o valor . (diretorio atual) caso contrario ´e atribuido o valor do primeiro parametro a variavel DIR
@@ -50,14 +44,9 @@ function cxr() { if [ $# = "0" ] ; then DIR="." ; else DIR="$1" ; fi ;\ find $DI
 
 
 
-
-
-
-
 function mc() { echo "comando mc nulo" ; } 
 #====================================================
 #exibe a mensagem "comando mc nulo" no terminal
-
 
 
 

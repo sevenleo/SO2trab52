@@ -1,5 +1,5 @@
 #!/bin/sh
-
+clear
 usuarios(){
 	#grep -w = palavra exata // grep -i =  maiusculas e minusculas  
 	cat /etc/passwd | cut -f 1 -d ':' | grep -iw "$user"

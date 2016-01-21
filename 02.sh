@@ -1,5 +1,5 @@
 #!/bin/sh
-
+clear
 mostrar(){
 	echo "Numero1: $numero1"
 	echo "Numero2: $numero2"
